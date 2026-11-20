@@ -355,13 +355,13 @@ const PR=[
  {p:"Ship, then iterate to greatness",q:"launch an initial version rapidly, but will continue to iterate",src:"Vercel value ‘Iterate to greatness’, via Paraform: How Vercel hires",url:"https://www.paraform.com/blog/how-vercel-hires",me:"This application went through three full redesigns before you saw it. Each version shipped, got judged, and the next one kept only what worked.",link:["",""],learn:"How to judge when a finance tool is ready for others to rely on."}
 ];
 let pi=0;
-function paintP(){
+function paintP(){if(!$("plist"))return;
   $("plist").innerHTML=PR.map((x,i)=>`<button class="${i===pi?"on":""}" data-i="${i}"><span class="n">${String(i+1).padStart(2,"0")}</span>${x.p}</button>`).join("");
   const x=PR[pi];
   $("pview").innerHTML=`<div class="pv-anim"><p class="quote">${x.q}</p><p class="cite"><span>${x.src}</span><a href="${x.url}" target="_blank" rel="noopener">source ↗</a></p>
    <dl class="pv-rows"><div><dt>Where I did this</dt><dd>${x.me}${x.link[0]?` <a href="#my-ships" data-jump="${x.link[1]}">${x.link[0]} →</a>`:""}</dd></div><div><dt>Still to learn</dt><dd>${x.learn}</dd></div></dl></div>`;
 }
-$("plist").onclick=e=>{const b=e.target.closest("button");if(!b)return;pi=+b.dataset.i;paintP()};
+if($("plist"))$("plist").onclick=e=>{const b=e.target.closest("button");if(!b)return;pi=+b.dataset.i;paintP()};
 document.addEventListener("click",e=>{const a=e.target.closest("[data-jump]");if(!a)return;e.preventDefault();navigate("/my-ships");setTimeout(()=>document.querySelector(a.dataset.jump).scrollIntoView({behavior:"smooth"}),80)});
 paintP();
 const ROT=[

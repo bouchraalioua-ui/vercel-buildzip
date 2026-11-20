@@ -109,11 +109,11 @@ export const markup = String.raw`
   <div class="sec"><div class="wrap">
     <p class="kicker" id="w-scale">The scale I’ve worked at</p>
     <div class="scale">
-      <div><b>$700M</b><span>Paramount+ revenue a year, allocated by an app I built</span></div>
-      <div><b>$6.4M</b><span>over-allocation I found, fixed and presented to the CFO</span></div>
-      <div><b>$600M</b><span>Kaiser Permanente budget, 27 locations, 200 cost centers</span></div>
-      <div><b>$45M</b><span>campus funding I advise on, appointed by the UCLA Chancellor</span></div>
-      <div><b>$5.5M</b><span>managed directly <em class="todo">· add which budget</em></span></div>
+      <div><b>$700M</b><span>Paramount+ allocation revenue</span></div>
+      <div><b>$6.4M</b><span>detected over-allocation, fixed and presented to the CFO</span></div>
+      <div><b>$600M</b><span>Kaiser Permanente operating budget across 27 locations and 200 cost centers</span></div>
+      <div><b>$45M</b><span>appointed by the UCLA chancellor to help advise on</span></div>
+      <div><b>$5.5M</b><span>managed directly through student government positions</span></div>
     </div>
   </div></div>
   <div class="sec" data-maybe="photos" id="w-places"><div class="wrap">

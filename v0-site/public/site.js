@@ -19,12 +19,14 @@ document.getElementById("switch")&&document.getElementById("switch").addEventLis
 /* =================== router =================== */
 const routes=[...document.querySelectorAll(".route")];
 let CUR="/";
-function navigate(path){try{if(location.hash!=="#"+path)history.pushState(null,"","#"+path)}catch(e){}route(path)}
-document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#/"]');if(!a||a.dataset.jump||a.closest(".dd"))return;e.preventDefault();navigate(a.getAttribute("href").slice(1))});
+const ROUTES=["/","/why-me","/my-ships","/why-vercel"];
+const toHash=p=>"#"+(p==="/"?"home":p.slice(1));
+const fromHash=h=>{h=(h||"").replace(/^#\/?/,"");if(!h||h==="home")return"/";const p="/"+h;return ROUTES.includes(p)?p:null};
+function navigate(path){try{if(location.hash!==toHash(path))history.pushState(null,"",toHash(path))}catch(e){}route(path)}
+document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#"]');if(!a||a.dataset.jump||a.closest(".dd"))return;const p=fromHash(a.getAttribute("href"));if(!p)return;e.preventDefault();navigate(p)});
 addEventListener("popstate",()=>route());
 function route(force){
-  const h=(typeof force==="string"&&force)||location.hash.replace(/^#/,"")||"/";
-  const path=h.startsWith("/")?h:null;
+  const path=(typeof force==="string"&&force)||fromHash(location.hash);
   if(!path){return} // in-page anchor
   CUR=path;routes.forEach(r=>r.classList.toggle("on",r.dataset.route===path));
   document.querySelectorAll(".links a").forEach(a=>a.classList.toggle("on",a.dataset.r===path));
@@ -131,7 +133,7 @@ const DEC=[
 ];
 let di=0;
 function paintD(){document.getElementById("dtabs").innerHTML=DEC.map((d,i)=>`<button class="${i===di?"on":""}" data-i="${i}">${d.k}</button>`).join("");
- const d=DEC[di];document.getElementById("flow").innerHTML=[["Situation",d.s],["Options",d.o],["My choice",d.c],["Result",d.r]].map(([a,b])=>`<div><dt><i></i>${a}</dt><dd>${b}</dd></div>`).join("")+`<div style="grid-column:1/-1;padding-top:14px"><a class="proof" data-jump="${d.l[1]}" href="#/my-ships">${d.l[0]} ↓</a></div>`}
+ const d=DEC[di];document.getElementById("flow").innerHTML=[["Situation",d.s],["Options",d.o],["My choice",d.c],["Result",d.r]].map(([a,b])=>`<div><dt><i></i>${a}</dt><dd>${b}</dd></div>`).join("")+`<div style="grid-column:1/-1;padding-top:14px"><a class="proof" data-jump="${d.l[1]}" href="#my-ships">${d.l[0]} ↓</a></div>`}
 /* old decision tabs removed (moved into How I ship) */
 
 /* =================== SHIPS v7 =================== */
@@ -151,7 +153,7 @@ function paintSteps(){
  const N=STEPS.length;
  $("steps6").innerHTML=`<span class="pf" style="width:calc(${si/(N-1)*100}% - ${si/(N-1)*28}px)"></span>`+STEPS.map((x,i)=>`<button class="${i===si?"on":i<si?"done":""}" data-i="${i}"><i>${String(i+1).padStart(2,"0")}</i><span>${x.t}</span></button>`).join("");
  const x=STEPS[si];
- $("steppanel").innerHTML=`<dl class="sp-c"><dt>Vercel</dt><dd>${x.v}<small><a href="${x.src[1]}" target="_blank" rel="noopener">${x.src[0]} ↗</a></small></dd></dl><dl class="sp-c"><dt>Me</dt><dd>${x.me}</dd></dl><dl class="sp-c"><dt>Proof</dt><dd><a href="#/my-ships" data-jump="${x.p[1]}">${x.p[0]} ↓</a></dd></dl>`;
+ $("steppanel").innerHTML=`<dl class="sp-c"><dt>Vercel</dt><dd>${x.v}<small><a href="${x.src[1]}" target="_blank" rel="noopener">${x.src[0]} ↗</a></small></dd></dl><dl class="sp-c"><dt>Me</dt><dd>${x.me}</dd></dl><dl class="sp-c"><dt>Proof</dt><dd><a href="#my-ships" data-jump="${x.p[1]}">${x.p[0]} ↓</a></dd></dl>`;
 }
 $("steps6").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;si=+b.dataset.i;paintSteps()});
 paintSteps();
@@ -322,7 +324,7 @@ const DD={"/why-me":[["01","My story","Listen or read, two minutes","/why-me","#
 (()=>{const dd=document.getElementById("dd"),nav=document.querySelector("header.nav");let hide;
  const go=(r,sel)=>{dd.classList.remove("on");if(curRoute()!==r)navigate(r);setTimeout(()=>{const el=document.querySelector(sel);if(el){const y=el.getBoundingClientRect().top+scrollY-120;scrollTo({top:y,behavior:"smooth"})}},curRoute()===r?0:120)};
  document.querySelectorAll(".links a").forEach(a=>a.addEventListener("mouseenter",()=>{clearTimeout(hide);const items=DD[a.dataset.r];if(!items){dd.classList.remove("on");return}
-  dd.innerHTML=items.map(([n,b,s2,r,sel])=>`<a href="#${r}" data-r="${r}" data-sel="${sel}"><i>${n}</i><span><b>${b}</b><small>${s2}</small></span></a>`).join("");
+  dd.innerHTML=items.map(([n,b,s2,r,sel])=>`<a href="${toHash(r)}" data-r="${r}" data-sel="${sel}"><i>${n}</i><span><b>${b}</b><small>${s2}</small></span></a>`).join("");
   const ar=a.getBoundingClientRect(),nr=nav.getBoundingClientRect();dd.style.left=(ar.left+ar.width/2)+"px";dd.style.top=(nr.bottom-6)+"px";dd.style.position="fixed";dd.classList.add("on")}));
  const out=()=>{hide=setTimeout(()=>dd.classList.remove("on"),180)};document.querySelector(".links").addEventListener("mouseleave",out);dd.addEventListener("mouseleave",out);dd.addEventListener("mouseenter",()=>clearTimeout(hide));
  dd.addEventListener("click",e=>{const a=e.target.closest("a");if(!a)return;e.preventDefault();go(a.dataset.r,a.dataset.sel)})})();
@@ -340,13 +342,13 @@ function paintP(){
   $("plist").innerHTML=PR.map((x,i)=>`<button class="${i===pi?"on":""}" data-i="${i}"><span class="n">${String(i+1).padStart(2,"0")}</span>${x.p}</button>`).join("");
   const x=PR[pi];
   $("pview").innerHTML=`<div class="pv-anim"><p class="quote">${x.q}</p><p class="cite"><span>${x.src}</span><a href="${x.url}" target="_blank" rel="noopener">source ↗</a></p>
-   <dl class="pv-rows"><div><dt>Where I did this</dt><dd>${x.me}${x.link[0]?` <a href="#/my-ships" data-jump="${x.link[1]}">${x.link[0]} →</a>`:""}</dd></div><div><dt>Still to learn</dt><dd>${x.learn}</dd></div></dl></div>`;
+   <dl class="pv-rows"><div><dt>Where I did this</dt><dd>${x.me}${x.link[0]?` <a href="#my-ships" data-jump="${x.link[1]}">${x.link[0]} →</a>`:""}</dd></div><div><dt>Still to learn</dt><dd>${x.learn}</dd></div></dl></div>`;
 }
 $("plist").onclick=e=>{const b=e.target.closest("button");if(!b)return;pi=+b.dataset.i;paintP()};
 document.addEventListener("click",e=>{const a=e.target.closest("[data-jump]");if(!a)return;e.preventDefault();navigate("/my-ships");setTimeout(()=>document.querySelector(a.dataset.jump).scrollIntoView({behavior:"smooth"}),80)});
 paintP();
 const ROT=[
- {t:"Product Finance",l:"Unit economics on a consumption-based platform: how usage, infrastructure cost and pricing set margin.",q:"How do you forecast revenue when usage can spike overnight?",p:`CloudMargin, my model of an AI infrastructure business. <a href="#/my-ships" data-jump="#s-cm">Open →</a>`},
+ {t:"Product Finance",l:"Unit economics on a consumption-based platform: how usage, infrastructure cost and pricing set margin.",q:"How do you forecast revenue when usage can spike overnight?",p:`CloudMargin, my model of an AI infrastructure business. <a href="#my-ships" data-jump="#s-cm">Open →</a>`},
  {t:"GTM & Corporate Finance",l:"How pipeline, bookings and sales capacity turn into a plan, and how the plan is tracked.",q:"How does forecast accuracy change when deals are usage-based instead of seat-based?",p:`Long-range plan variance at CBS Studios; budget-versus-actual across 200 cost centers at Kaiser Permanente.`},
  {t:"Corp Dev & IR",l:"How Vercel evaluates teams and companies to acquire or invest in, and how they’re integrated.",q:"What makes an acquired team’s product fit the platform?",p:`Researching cloud and AI infrastructure startups at HP Tech Ventures. I haven’t worked on a deal; this is the rotation where I’d learn the most.`}
 ];

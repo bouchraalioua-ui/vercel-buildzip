@@ -146,7 +146,6 @@ export const markup = String.raw`
   </div>
 
   <div class="wrap chain" id="chain">
-    <svg class="chain-curve" id="chaincurve" aria-hidden="true"></svg>
 
     <!-- ===== SHIP 01 ===== -->
     <article class="ship" id="s-var">
@@ -178,26 +177,28 @@ export const markup = String.raw`
       <div class="demo" id="vdemo">
         <div class="demo-bar">
           <div class="title"><span class="lights"><i></i><i></i><i></i></span>lrp-variance · synthetic data</div>
-          <div style="display:flex;gap:8px"><button class="btn" id="vdl">Download email</button><button class="btn ghost" id="vreset">Reset</button></div>
+          <button class="btn ghost" id="vreset">Reset</button>
         </div>
         <div class="vbody">
           <div class="vin">
-            <div class="mail">
+            <p class="panel-h">Inputs · drag them into the workspace, or click</p>
+            <div class="mail drag" draggable="true" data-k="email" id="din-email">
               <div class="mail-h"><b>Production schedule update · November</b><small class="mono">from: Production Planning</small></div>
-              <p>Attached are the updated production schedules. Three titles have moved.</p>
-              <div class="atts"><span class="att" id="att1">PDF · Schedule_Series.pdf</span><span class="att" id="att2">PDF · Schedule_Features.pdf</span></div>
+              <p>Attached are the updated production schedules. A few titles have moved.</p>
+              <div class="atts"><span class="att">PDF · Schedule_Series.pdf</span><span class="att">PDF · Schedule_Features.pdf</span></div>
             </div>
+            <div class="lrpcard drag" draggable="true" data-k="lrp" id="din-lrp"><span class="ico xls">XLS</span><div><b>LRP_FY27–29.xlsx</b><small class="mono">1,000+ lines · 10 titles shown</small></div></div>
             <div class="extract" id="vextract">
               <p class="panel-h">Extracted from the PDFs · edit to try your own</p>
               <textarea id="vtext" spellcheck="false"></textarea>
             </div>
-            <div class="lrpcard"><span class="ico xls">XLS</span><div><b>LRP_FY27–29.xlsx</b><small class="mono">1,000+ lines · 10 titles shown</small></div></div>
           </div>
           <div class="vout">
-            <div class="vsteps" id="vsteps"><span>Download</span><span>Extract PDFs</span><span>Match titles</span><span>Reconcile</span><span>Insights</span></div>
+            <div class="vdrop" id="vdrop"><p class="empty">Drop the email and the LRP workbook here</p></div>
+            <div class="vsteps" id="vsteps"><span>Extract PDFs</span><span>Read dates</span><span>Match titles</span><span>Reconcile</span><span>Insights</span></div>
             <div class="kpis" id="kpis"></div>
             <div class="out"><table class="t" id="vtable"><thead><tr><th>Title</th><th>LRP start</th><th>Revised</th><th>Shift</th><th>FY27 $M</th><th>FY28 $M</th><th>FY29 $M</th></tr></thead><tbody></tbody></table></div>
-            <div class="status" id="vstatus"><span>Press “Download email” to start.</span><span class="mono"></span></div>
+            <div class="status" id="vstatus"><span>Waiting for the email and the LRP.</span><span class="mono"></span></div>
           </div>
         </div>
         <div class="foot"><span>Synthetic titles and figures. Spend books 60% in the production-start year and 40% in the next.</span><span class="mono">runs in your browser</span></div>
@@ -238,28 +239,20 @@ export const markup = String.raw`
           <div class="title"><span class="lights"><i></i><i></i><i></i></span>revenue-allocation · synthetic data</div>
           <div style="display:flex;gap:8px"><button class="btn" id="astory">▶ Play the story</button><button class="btn ghost" id="areset">Reset</button></div>
         </div>
-        <div class="abody">
+        <div class="abody one">
           <div class="acol">
-            <p class="panel-h">1 · Match titles across sources</p>
-            <div class="out"><table class="t tight" id="mtable"><thead><tr><th>Paramount+ data</th><th>CBS data</th><th>Match</th></tr></thead><tbody></tbody></table></div>
-            <p class="msum mono" id="msum"></p>
-          </div>
-          <div class="acol">
-            <div class="arow">
-              <p class="panel-h">2 · Allocate the pool</p>
-              <div class="seg" id="amodel"><button class="on" data-m="stream">Streaming</button><button data-m="cable">Cable</button></div>
-            </div>
+            <div class="arow"><p class="panel-h">Paramount+ titles, allocated against CBS records</p><button class="btn ghost" id="amatch">Match titles</button></div>
             <div class="abars" id="abars"></div>
+            <div class="arow ctl">
+              <div class="seg" id="amodel"><button class="on" data-m="stream">Streaming model</button><button data-m="cable">Cable model</button></div>
+              <div class="seg" id="asrc"><button class="on" data-s="mine">My model</button><button data-s="old">Old process</button></div>
+            </div>
             <div class="whatif">
               <label for="wtitle">What if viewership for</label>
               <select id="wtitle"></select>
               <span>changes by</span>
               <input type="range" id="wpct" min="-50" max="50" step="5" value="0"/>
               <b class="mono" id="wpctv">+0%</b>
-            </div>
-            <div class="arow" style="margin-top:6px">
-              <p class="panel-h">3 · Tie out</p>
-              <div class="seg" id="asrc"><button class="on" data-s="mine">My model</button><button data-s="old">Old process</button></div>
             </div>
             <div class="status" id="astatus"></div>
           </div>

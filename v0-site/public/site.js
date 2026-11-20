@@ -158,21 +158,6 @@ function paintSteps(){
 $("steps6").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;si=+b.dataset.i;paintSteps()});
 paintSteps();
 
-/* ---------- chain: curve linking the ships + spotlight ---------- */
-(()=>{const chain=$("chain"),svg=$("chaincurve"),ships=[...chain.querySelectorAll(".ship")];let L=0;chain.classList.add("focus");
- function layout(){if(!chain.offsetParent)return;const c=chain.getBoundingClientRect();
-  const pts=ships.map(sh=>{const r=sh.getBoundingClientRect();return{x:r.left-c.left,top:r.top-c.top+60,bot:r.bottom-c.top-60}});
-  let d=`M${pts[0].x} ${pts[0].top}`;
-  for(let i=0;i<pts.length;i++){const p=pts[i];d+=` L${p.x} ${p.bot}`;if(i<pts.length-1){const q=pts[i+1];const mid=(p.bot+q.top)/2;d+=` C${p.x-46} ${p.bot+30}, ${q.x-46} ${q.top-30}, ${q.x} ${q.top}`}}
-  svg.setAttribute("viewBox",`0 0 ${c.width} ${c.height}`);svg.innerHTML=`<path d="${d}" transform="translate(-1 0)"/><path class="lit" id="chainlit" d="${d}" transform="translate(-1 0)"/>`;
-  const lp=$("chainlit");L=lp.getTotalLength();lp.style.strokeDasharray=L;prog()}
- function prog(){const lp=$("chainlit");if(!lp||!chain.offsetParent)return;const c=chain.getBoundingClientRect();const f=Math.max(0,Math.min(1,(innerHeight*.55-c.top)/c.height));lp.style.strokeDashoffset=L*(1-f)}
- addEventListener("scroll",prog,{passive:true});addEventListener("resize",layout);
- new ResizeObserver(layout).observe(chain);
- const ob=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){ships.forEach(s=>s.classList.toggle("active",s===e.target))}}),{rootMargin:"-40% 0px -40% 0px"});ships.forEach(s=>ob.observe(s));
- ships[0].classList.add("active");
- const _r=route;route=function(f){_r(f);setTimeout(layout,120)};setTimeout(layout,300)})();
-
 /* ---------- 01 · variance demo ---------- */
 const V_TITLES=[["Harbor Lights S2","2027-11",24.0],["The Long Field","2027-04",31.5],["Night Desk S3","2027-06",18.2],["Copper Road","2027-09",22.8],["Saltwater","2028-05",15.6],["Low Tide S2","2028-01",19.4],["Glass Avenue","2027-02",27.0],["Northline S4","2027-12",26.3],["Paper Moons","2028-08",12.9],["The Quiet Year","2027-07",16.7]];
 const V_TEXT=`Harbor Lights S2 — production start: 2027-11 → 2028-02
@@ -200,69 +185,101 @@ function vRender(instant){
  $("vstatus").className="status "+(tie?"good":"bad");
  $("vstatus").innerHTML=`<span>${tie?"Reconciled: every dollar moved between years, none lost":"Does not reconcile"}</span><span class="mono">$${totR.toFixed(1)}M total · ${moved.length} of ${rows.length} titles changed</span>`;
 }
-function vReset(){vT.forEach(clearTimeout);vT=[];vRan=false;$("vtext").value=V_TEXT;$("vextract").classList.remove("on");document.querySelectorAll(".att").forEach(a=>a.classList.remove("pulled"));
+let have={email:false,lrp:false};
+function vReset(){vT.forEach(clearTimeout);vT=[];vRan=false;have={email:false,lrp:false};$("vtext").value=V_TEXT;$("vextract").classList.remove("on");
+ document.querySelectorAll("#vdemo .drag").forEach(d=>d.classList.remove("used"));
+ $("vdrop").innerHTML=`<p class="empty">Drop the email and the LRP workbook here</p>`;
  document.querySelectorAll("#vsteps span").forEach(s=>s.className="");$("kpis").innerHTML="";
  $("vtable").querySelector("tbody").innerHTML=V_TITLES.map(([n,s])=>`<tr><td class="name">${n}</td><td>${s}</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>`).join("");
- $("vstatus").className="status";$("vstatus").innerHTML=`<span>Press “Download email” to start.</span><span class="mono"></span>`;$("vdl").textContent="Download email"}
+ $("vstatus").className="status";$("vstatus").innerHTML=`<span>Waiting for the email and the LRP.</span><span class="mono"></span>`}
+function vAdd(k){if(have[k])return;have[k]=true;$("din-"+k).classList.add("used");
+ const d=$("vdrop");const e=d.querySelector(".empty");if(e)e.remove();
+ d.insertAdjacentHTML("beforeend",k==="email"?`<div class="vchip"><span class="ico mail">EML</span>Production schedule update · 2 PDFs</div>`:`<div class="vchip"><span class="ico xls">XLS</span>LRP_FY27–29.xlsx</div>`);
+ if(have.email&&have.lrp)vRun();else{$("vstatus").innerHTML=`<span>Now add the ${have.email?"LRP workbook":"email"}.</span><span class="mono"></span>`}}
 function vRun(){vT.forEach(clearTimeout);vT=[];const st=[...document.querySelectorAll("#vsteps span")];const later=(ms,f)=>vT.push(setTimeout(f,ms));
- st.forEach(s=>s.className="");st[0].className="run";
- later(500,()=>{st[0].className="done";st[1].className="run";document.querySelectorAll(".att").forEach(a=>a.classList.add("pulled"))});
- later(1100,()=>{st[1].className="done";st[2].className="run";$("vextract").classList.add("on")});
- later(1700,()=>{st[2].className="done";st[3].className="run";vRender()});
- later(2300,()=>{st[3].className="done";st[4].className="run"});
- later(2700,()=>{st[4].className="done";vRan=true;$("vdl").textContent="Run again"});}
-$("vdl").onclick=vRun;$("vreset").onclick=vReset;
+ st.forEach(s=>s.className="");st[0].className="run";$("vstatus").innerHTML=`<span>Reading the email…</span><span class="mono"></span>`;
+ later(600,()=>{st[0].className="done";st[1].className="run";$("vextract").classList.add("on")});
+ later(1200,()=>{st[1].className="done";st[2].className="run"});
+ later(1800,()=>{st[2].className="done";st[3].className="run";vRender()});
+ later(2400,()=>{st[3].className="done";st[4].className="run"});
+ later(2900,()=>{st[4].className="done";vRan=true})}
+document.querySelectorAll("#vdemo .drag").forEach(el=>{
+ el.addEventListener("dragstart",e=>{if(el.classList.contains("used")){e.preventDefault();return}e.dataTransfer.setData("text/plain",el.dataset.k)});
+ el.addEventListener("click",()=>vAdd(el.dataset.k))});
+(()=>{const d=$("vdrop");d.addEventListener("dragover",e=>{e.preventDefault();d.classList.add("over")});d.addEventListener("dragleave",()=>d.classList.remove("over"));
+ d.addEventListener("drop",e=>{e.preventDefault();d.classList.remove("over");const k=e.dataTransfer.getData("text/plain");if(k)vAdd(k)})})();
+$("vreset").onclick=vReset;
 let vDeb;$("vtext").addEventListener("input",()=>{if(!vRan)return;clearTimeout(vDeb);vDeb=setTimeout(vRender,250)});
 vReset();
 
 /* ---------- 02 · allocation demo ---------- */
 const A_T=[["HARBOR LIGHTS (S2) - P+","Harbor Lights S2",18,10],["THE LONG FIELD - P+","The Long Field",15,14],["NIGHT DESK SEASON 3","Night Desk S3",13,9],["Copper Road","Copper Road",11,12],["LOW TIDE (S2) - P+","Low Tide S2",10,8],["NORTHLINE - SEASON 4","Northline S4",14,11],["Glass Avenue","Glass Avenue",9,13],["PAPER MOONS - P+","Paper Moons",7,6]]; // paramount name, cbs name, viewing hours (M), cable weight
-const POOL=120;let AS={model:"stream",title:5,pct:0,src:"mine"};
+const POOL=120;let AS={model:"stream",title:5,pct:0,src:"mine",mN:0};
+const EXACT=A_T.map(([p,c])=>p.trim().toUpperCase()===c.toUpperCase());
+const NEEDS=A_T.map((t,i)=>i).filter(i=>!EXACT[i]);
+const isMatched=i=>EXACT[i]||NEEDS.indexOf(i)<AS.mN;
+const allMatched=()=>AS.mN>=NEEDS.length;
 function shares(st){const w=A_T.map((t,i)=>(st.model==="stream"?t[2]:t[3])*(i===st.title?1+st.pct/100:1));const s=w.reduce((a,b)=>a+b,0);return w.map(x=>x/s)}
-function paintMatch(){let nmz=0;$("mtable").querySelector("tbody").innerHTML=A_T.map(([p,c])=>{const ex=p.trim().toUpperCase()===c.toUpperCase();if(!ex)nmz++;return`<tr><td class="name" style="font-family:var(--mono);font-size:11px">${p}</td><td class="name">${c}</td><td>${ex?'<span class="mtag ex">exact</span>':'<span class="mtag nm">normalized</span>'}</td></tr>`}).join("");
- $("msum").textContent=`${A_T.length} / ${A_T.length} titles matched · ${nmz} only after normalizing names, seasons and suffixes`}
-function paintAlloc(){const sh=shares(AS),base=shares({...AS,pct:0});const al=sh.map(x=>x*POOL),b0=base.map(x=>x*POOL);
- const dupI=4;const dup=AS.src==="old"?b0[dupI]*.5:0; // the old process also carried a FY27 amount forward for one title
+function paintAlloc(){
+ const ready=allMatched();
+ const sh=shares(AS),base=shares({...AS,pct:0});const al=sh.map(x=>x*POOL),b0=base.map(x=>x*POOL);
+ const dup=ready&&AS.src==="old"?b0[4]*.5:0; // the old process also carried one title's FY27 amount forward
  const max=Math.max(...al,dup)*1.05;
- $("abars").innerHTML=A_T.map(([,c],i)=>{const d=al[i]-b0[i];return`<div class="ab ${i===AS.title&&AS.pct?"hl":""}"><span>${c}</span><span class="bar2"><i style="width:${al[i]/max*100}%"></i></span><span class="v">$${al[i].toFixed(1)}M${Math.abs(d)>.05?`<small class="${d>0?"up":"dn"}">${d>0?"+":"−"}${Math.abs(d).toFixed(1)}</small>`:""}</span></div>`}).join("")+
-  (dup?`<div class="ab dup"><span>Low Tide S2 · FY27 carry-fwd</span><span class="bar2"><i style="width:${dup/max*100}%"></i></span><span class="v">$${dup.toFixed(1)}M</span></div>`:"");
- const tot=al.reduce((a,b)=>a+b,0)+dup;const st=$("astatus");
- if(Math.abs(tot-POOL)<.05){st.className="status good";st.innerHTML=`<span>Ties to the pool${AS.pct?" , even after the what-if":""}</span><span class="mono">$${tot.toFixed(1)}M of $${POOL.toFixed(1)}M</span>`}
- else{st.className="status bad";st.innerHTML=`<span>Pool sums don’t tie: over by $${(tot-POOL).toFixed(1)}M. One title is counted in two years.</span><span class="mono">$${tot.toFixed(1)}M vs $${POOL.toFixed(1)}M</span>`}
+ $("abars").innerHTML=A_T.map(([p,c],i)=>{const m=isMatched(i);const d=al[i]-b0[i];
+  return`<div class="ab ${ready?"":"pending"} ${ready&&i===AS.title&&AS.pct?"hl":""}"><span class="nm">${m?`<span>${c}</span><span class="raw">${p}</span>`:`<span class="raw" style="color:var(--fg2)">${p}</span><span class="tag bad">no CBS match</span>`}</span><span class="bar2"><i style="width:${al[i]/max*100}%"></i></span><span class="v">${ready?`$${al[i].toFixed(1)}M${Math.abs(d)>.05?`<small class="${d>0?"up":"dn"}">${d>0?"+":"−"}${Math.abs(d).toFixed(1)}</small>`:""}`:"—"}</span></div>`}).join("")+
+  (dup?`<div class="ab dup"><span class="nm"><span>Low Tide S2</span><span class="tag bad">FY27 amount carried forward</span></span><span class="bar2"><i style="width:${dup/max*100}%"></i></span><span class="v">$${dup.toFixed(1)}M</span></div>`:"");
+ const st=$("astatus");$("amatch").style.display=ready?"none":"";
+ if(!ready){const left=NEEDS.length-AS.mN;st.className="status bad";st.innerHTML=`<span>Can’t allocate yet: ${left} of ${A_T.length} titles don’t match the CBS records.</span><span class="mono">names · seasons · suffixes</span>`}
+ else{const tot=al.reduce((a,b)=>a+b,0)+dup;
+  if(Math.abs(tot-POOL)<.05){st.className="status good";st.innerHTML=`<span>Ties to the pool${AS.pct?", even after the what-if":""}</span><span class="mono">$${tot.toFixed(1)}M of $${POOL.toFixed(1)}M</span>`}
+  else{st.className="status bad";st.innerHTML=`<span>Pool sums don’t tie: over by $${(tot-POOL).toFixed(1)}M. One title is counted in two years.</span><span class="mono">$${tot.toFixed(1)}M vs $${POOL.toFixed(1)}M</span>`}}
  $("wpctv").textContent=(AS.pct>=0?"+":"")+AS.pct+"%";$("wpct").value=AS.pct;$("wtitle").value=AS.title;
+ [$("wpct"),$("wtitle")].forEach(x=>x.disabled=!ready);
  document.querySelectorAll("#amodel button").forEach(b=>b.classList.toggle("on",b.dataset.m===AS.model));
  document.querySelectorAll("#asrc button").forEach(b=>b.classList.toggle("on",b.dataset.s===AS.src))}
+let mTimer;
+function aMatch(cb){clearInterval(mTimer);mTimer=setInterval(()=>{AS.mN++;paintAlloc();if(allMatched()){clearInterval(mTimer);cb&&cb()}},260)}
 $("wtitle").innerHTML=A_T.map(([,c],i)=>`<option value="${i}">${c}</option>`).join("");
 $("wtitle").onchange=e=>{AS.title=+e.target.value;paintAlloc()};$("wpct").oninput=e=>{AS.pct=+e.target.value;paintAlloc()};
 $("amodel").onclick=e=>{const b=e.target.closest("button");if(b){AS.model=b.dataset.m;paintAlloc()}};
-$("asrc").onclick=e=>{const b=e.target.closest("button");if(b){AS.src=b.dataset.s;paintAlloc()}};
-function aReset(){AS={model:"stream",title:5,pct:0,src:"mine"};paintAlloc()}
+$("asrc").onclick=e=>{const b=e.target.closest("button");if(b&&allMatched()){AS.src=b.dataset.s;paintAlloc()}};
+$("amatch").onclick=()=>aMatch();
+function aReset(){clearInterval(mTimer);AS={model:"stream",title:5,pct:0,src:"mine",mN:0};paintAlloc()}
 $("areset").onclick=()=>{aStop();aReset()};
-paintMatch();aReset();
+aReset();
 
-/* named cursors play the real story on the synthetic model */
+/* the story, told by named cursors on the synthetic model */
 const FG=(()=>{const layer=$("fgl"),demo=$("adem");
  const mk=(n,c)=>{const d=document.createElement("div");d.className="fcur";d.innerHTML=`<svg width="18" height="18" viewBox="0 0 16 16"><path d="M1 1l5 14 2-6 6-2z" fill="${c}" stroke="#fff" stroke-width="1"/></svg><span class="tag" style="background:${c}">${n}</span>`;layer.appendChild(d);return d};
  const C={cfo:mk("CFO, CBS Studios","#e5484d"),vp:mk("VP Strategy","#8e4ec6"),me:mk("Bouchra","#0070f3")},COL={cfo:"#e5484d",vp:"#8e4ec6",me:"#0070f3"},NM={cfo:"CFO, CBS Studios",vp:"VP Strategy",me:"Bouchra"};
  let T=[],busy=false;const later=(ms,f)=>T.push(setTimeout(f,ms));
- const pos=id=>{const r=$(id).getBoundingClientRect(),d=demo.getBoundingClientRect();return{x:r.left-d.left+r.width*.5,y:r.top-d.top+r.height*.5}};
- const go=(k,id,dx=0,dy=0)=>{const p=pos(id);C[k].classList.add("on");C[k].style.transform=`translate(${p.x+dx}px,${p.y+dy}px)`};
- const say=(k,id,t,dx=-120,dy=-96)=>{layer.querySelectorAll(".fcmt").forEach(o=>{o.classList.remove("on");setTimeout(()=>o.remove(),350)});const p=pos(id);const c=document.createElement("div");c.className="fcmt";c.style.left=Math.min(demo.clientWidth-250,Math.max(8,p.x+dx))+"px";c.style.top=Math.max(8,p.y+dy)+"px";c.innerHTML=`<small><i style="background:${COL[k]}"></i>${NM[k]}</small>${t}`;layer.appendChild(c);requestAnimationFrame(()=>c.classList.add("on"))};
+ const el=x=>typeof x==="string"?$(x):x;
+ const pos=x=>{const r=el(x).getBoundingClientRect(),d=demo.getBoundingClientRect();return{x:r.left-d.left+r.width*.5,y:r.top-d.top+r.height*.5}};
+ const go=(k,x,dx=0,dy=0)=>{const p=pos(x);C[k].classList.add("on");C[k].style.transform=`translate(${p.x+dx}px,${p.y+dy}px)`};
+ const say=(k,x,t,dx=-120,dy=-96)=>{layer.querySelectorAll(".fcmt").forEach(o=>{o.classList.remove("on");setTimeout(()=>o.remove(),350)});const p=pos(x);const c=document.createElement("div");c.className="fcmt";c.style.left=Math.min(demo.clientWidth-260,Math.max(8,p.x+dx))+"px";c.style.top=Math.max(8,p.y+dy)+"px";c.innerHTML=`<small><i style="background:${COL[k]}"></i>${NM[k]}</small>${t}`;layer.appendChild(c);requestAnimationFrame(()=>c.classList.add("on"))};
+ const row=i=>$("abars").children[i];
  function stop(){T.forEach(clearTimeout);T=[];busy=false;layer.querySelectorAll(".fcmt").forEach(o=>o.remove());Object.values(C).forEach(c=>c.classList.remove("on"))}
  function play(){if(busy)return;stop();busy=true;aReset();const d=demo.getBoundingClientRect();Object.values(C).forEach(c=>c.style.transform=`translate(${d.width-40}px,${d.height-40}px)`);
-  later(200,()=>go("cfo","wpct",0,6));
-  later(1500,()=>say("cfo","wpct","What happens to the pool if Northline’s viewership is up 25%?",-160,-100));
-  later(2600,()=>{let k=0;const iv=setInterval(()=>{k+=5;AS.pct=k;paintAlloc();if(k>=25)clearInterval(iv)},140)});
-  later(4300,()=>go("me","abars",60,-30));
-  later(5300,()=>{const sh=shares(AS),b=shares({...AS,pct:0});say("me","abars",`Northline goes from $${(b[5]*POOL).toFixed(1)}M to $${(sh[5]*POOL).toFixed(1)}M. Every other title gives up share, and the pool still ties.`,-40,-110)});
-  later(7600,()=>go("vp","amodel",0,4));
-  later(8700,()=>{say("vp","amodel","Can we see the same thing on the cable model?",-200,-90);AS.model="cable";paintAlloc()});
-  later(10600,()=>go("vp","asrc",0,4));
-  later(11700,()=>{say("vp","asrc","And why didn’t the old process tie?",-180,-90);AS.src="old";paintAlloc()});
-  later(13300,()=>go("me","astatus",-60,4));
-  later(14400,()=>say("me","astatus","The old pool sums counted one title in two years. Checking those sums is how I found the $6.4M.",-60,-104));
-  later(17200,()=>{AS.src="mine";paintAlloc()});
-  later(18600,()=>{stop()})}
+  // 1 · the VP is stuck reconciling titles
+  later(200,()=>go("vp",row(2),-60,0));
+  later(1400,()=>say("vp",row(2),"Paramount+ and CBS name the same shows differently. Reconciling these takes days of back-and-forth.",-20,-104));
+  // 2 · Bouchra makes matching automatic
+  later(4200,()=>go("me","amatch",0,4));
+  later(5200,()=>{say("me","amatch","I normalize names, seasons and suffixes once, so every title matches every time.",-240,-96);aMatch()});
+  // 3 · the old process doesn't tie
+  later(8600,()=>go("vp","asrc",30,4));
+  later(9600,()=>{say("vp","asrc","Then why didn’t the old allocation tie to the pool?",-200,-90);AS.src="old";paintAlloc()});
+  // 4 · the $6.4M
+  later(11800,()=>go("me","astatus",-80,4));
+  later(12800,()=>say("me","astatus","Its pool sums were inconsistent: one title was counted in two years. Checking those sums is how I found the $6.4M.",-80,-110));
+  later(16000,()=>{AS.src="mine";paintAlloc()});
+  // 5 · the CFO asks for a new number, instantly
+  later(16800,()=>go("cfo","wpct",0,6));
+  later(17800,()=>say("cfo","wpct","What if Northline’s viewership is up 25%? Show me the pool now.",-160,-100));
+  later(19000,()=>{let k=0;const iv=setInterval(()=>{k+=5;AS.pct=k;paintAlloc();if(k>=25)clearInterval(iv)},120)});
+  later(20400,()=>go("me",row(5),80,0));
+  later(21200,()=>{const sh=shares(AS),b=shares({...AS,pct:0});say("me",row(5),`Done. Northline goes from $${(b[5]*POOL).toFixed(1)}M to $${(sh[5]*POOL).toFixed(1)}M, and the pool still ties.`,-20,-104)});
+  later(25000,()=>stop())}
  $("astory").onclick=play;let played=false;
  new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!played){played=true;setTimeout(play,500)}}),{threshold:.5}).observe(demo);
  return{stop}})();

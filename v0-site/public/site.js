@@ -67,40 +67,42 @@ crosses();addEventListener("resize",crosses);
 
 /* =================== WHY ME: audio story =================== */
 const CH=[
- {t:"Learning the systems",img:"Kaiser Permanente · IRC",s:[
-  [0,"My first finance roles taught me how numbers get recorded, checked and explained."],
-  [7,"At Kaiser Permanente I ran monthly budget-versus-actual variance analysis across 27 locations."],
-  [15,"At the International Rescue Committee I saw what clean records mean for the people behind them."]]},
- {t:"From using tools to building them",img:"CBS Studios",s:[
-  [23,"In June 2026 I joined the planning and strategy team at CBS Studios."],
-  [29,"Nobody assigned me a tool to build."],
-  [33,"I spent my first weeks learning how the team worked, and flagging the processes that were static and manual."],
-  [42,"Then I designed and built applications to replace two of them, on my own, and the team made them part of its workflow."]]},
- {t:"Respecting the controls",img:"NBCUniversal",s:[
-  [50,"Now, at NBCUniversal, I work on close, reconciliations and invoice review."],
-  [58,"It has taught me that automation only helps if it respects the controls around it."]]},
- {t:"Learning new businesses",img:"HP Tech Ventures · CloudMargin",s:[
-  [66,"At HP Tech Ventures I researched cloud and AI infrastructure startups."],
-  [73,"To understand those businesses properly, I built a model of one myself."]]},
- {t:"What I want next",img:"UCLA · Vercel",s:[
-  [81,"I’m not trying to become a software engineer."],
-  [86,"I’m becoming a finance professional who can build what the team needs,"],
-  [93,"and I want to do that somewhere finance is expected to build."]]}
+ {t:"Brought in to improve the work",img:"Kaiser Permanente · Paramount",s:[
+  [0,"Something that’s been pretty consistent throughout my internships is that I was brought in not just to learn finance, but to find ways technology could improve how the work was being done.",[[0, 3.86], [4.13, 5.32], [6.11, 9.27], [10.13, 11.41]],11.41],
+  [11.7,"At Kaiser, that started with using Tableau to better understand financial performance.",[[11.7, 14.82]],14.82],
+  [15.51,"But at Paramount, I had the opportunity to take that a lot further and actually build.",[[15.51, 16.22], [16.68, 19.01], [19.32, 20.05], [20.44, 20.5]],20.5]]},
+ {t:"No blueprint",img:"Paramount",s:[
+  [21.09,"And I think what’s important about those projects is that none of them came with a blueprint.",[[21.09, 25.5]],25.5],
+  [26.43,"I wasn’t told exactly what to create.",[[26.43, 28.4]],28.4],
+  [28.94,"I had to understand the business, how different teams approached their work, and where I could actually add value.",[[28.94, 30.7], [31.25, 33.06], [33.53, 35.26]],35.26]]},
+ {t:"Comfortable with ambiguity",img:"Paramount",s:[
+  [36.36,"That’s probably where I’ve gotten most comfortable with ambiguity.",[[36.36, 39.01]],39.01],
+  [39.9,"I genuinely enjoy figuring things out as I go, learning better ways to build, and getting feedback until something is reliable enough for people to use.",[[39.9, 42.56], [43.45, 44.74], [45.15, 48.6]],48.6]]},
+ {t:"Seeing it pay off",img:"Paramount",s:[
+  [49.69,"And seeing that pay off was incredibly rewarding.",[[49.69, 50.86], [51.11, 51.97]],51.97],
+  [52.8,"The applications I developed were adopted into planning workflows, helped uncover a $6.4 million over-allocation, and gave me the opportunity to present my work to senior leadership.",[[52.8, 56.02], [56.64, 59.12], [59.4, 59.65], [60.39, 63.44]],63.44]]},
+ {t:"Beyond my internships",img:"UCLA · HP Tech Ventures · CloudMargin",s:[
+  [64.52,"That curiosity also extends beyond my internships.",[[64.52, 67.21]],67.21],
+  [68.0,"It’s why I’m studying Statistics and Data Science alongside Economics at UCLA, why I explored AI and cloud startups through HP Tech Ventures, and why I independently built CloudMargin to understand how infrastructure usage translates into revenue, costs, and margins.",[[68.0, 71.98], [72.9, 73.31], [73.57, 75.14], [75.42, 76.62], [77.12, 82.62]],82.62]]},
+ {t:"How I see finance now",img:"Vercel",s:[
+  [83.14,"And I think all of this has fundamentally changed how I see a career in finance.",[[83.14, 83.26], [83.67, 84.26], [85.39, 88.44]],88.44],
+  [89.52,"I don’t want to just understand a business well enough to explain its numbers.",[[89.52, 92.65]],92.65],
+  [93.47,"I want to understand it well enough to recognize what’s possible, take ownership of making it better, and build something that continues creating value long after I’ve moved on to the next challenge.",[[93.47, 95.95], [96.66, 98.29], [98.94, 101.11], [102.01, 103.84]],103.84]]}
 ];
 const DUR=130;const ISL={ch:0,w:-1};
-const sents=[];CH.forEach((c,ci)=>c.s.forEach(([t,x])=>sents.push({t,x,ci})));
-sents.forEach((s,i)=>s.end=i<sents.length-1?sents[i+1].t:CH[CH.length-1].s.slice(-1)[0][0]+9);
+const sents=[];CH.forEach((c,ci)=>c.s.forEach(([t,x,sg,e])=>sents.push({t,x,ci,sg:sg||[[t,e]],end:e})));
 const tr=document.getElementById("transcript");
 // word-level timing: each sentence's duration is split across its words by length
 const WORDS=[];
-sents.forEach(s=>{const ws=s.x.split(" ");const tot=ws.reduce((a,w)=>a+w.length+1,0);let acc=0;ws.forEach(w=>{const st=s.t+(s.end-s.t)*acc/tot;acc+=w.length+1;WORDS.push({w,st,en:s.t+(s.end-s.t)*acc/tot,ci:s.ci,si:s})})});
+sents.forEach(s=>{const ws=s.x.split(" ");const tot=ws.reduce((a,w)=>a+w.length+1,0);const sp=s.sg.reduce((a,g)=>a+g[1]-g[0],0);const at=f=>{let r=f*sp;for(const g of s.sg){const d=g[1]-g[0];if(r<=d)return g[0]+r;r-=d}return s.end};let acc=0;ws.forEach(w=>{const st=at(acc/tot);acc+=w.length+1;WORDS.push({w,st,en:at(acc/tot),ci:s.ci,si:s})})});
 let wi=0;
 tr.innerHTML=CH.map((c,ci)=>`<p class="ch">${String(ci+1).padStart(2,"0")} · ${c.t}</p><p>${WORDS.filter(x=>x.ci===ci).map(x=>`<span class="w" data-i="${WORDS.indexOf(x)}">${x.w}</span>`).join(" ")}</p>`).join("");
 const WEL=[...tr.querySelectorAll("span.w")];
 const fmt=s=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
-const endT=sents[sents.length-1].end;
+const endT=104.8;const VO=document.getElementById("vo");if(VO)VO.onended=()=>{T=endT;setPlay(false);paintT()};
+function seek(t){T=Math.max(0,Math.min(endT,t));if(VO)try{VO.currentTime=T}catch(e){}paintT()}
 document.getElementById("chapters").innerHTML=CH.map((c,i)=>`<button data-c="${i}"><span class="n">${String(i+1).padStart(2,"0")}</span><span>${c.t}</span><span class="t">${fmt(c.s[0][0])}</span></button>`).join("");
-document.getElementById("scene").innerHTML=CH.map((c,i)=>`<div class="img" data-c="${i}"><div class="slot">scene ${i+1} image<br/>${c.img}<br/>(photo or sanitised document)</div></div>`).join("")+`<div class="cap"><b id="capt"></b><span id="capn"></span></div>`;
+document.getElementById("scene").innerHTML=CH.map((c,i)=>`<div class="img" data-c="${i}"><div class="slot"><i>${String(i+1).padStart(2,"0")}</i><em>${c.img}</em></div></div>`).join("")+`<div class="cap"><b id="capt"></b><span id="capn"></span></div>`;
 const bar=document.getElementById("bar");
 CH.forEach(c=>{const k=document.createElement("i");k.className="tick";k.style.left=(c.s[0][0]/endT*100)+"%";bar.appendChild(k)});
 let T=0,playing=false,rate=1,last=0;
@@ -115,13 +117,13 @@ function paintT(){
   document.querySelectorAll("#scene .img").forEach(b=>b.classList.toggle("on",+b.dataset.c===cur));
   document.getElementById("capt").textContent=CH[cur].t;document.getElementById("capn").textContent=`${String(cur+1).padStart(2,"0")} / ${String(CH.length).padStart(2,"0")}`;
 }
-function tick(now){if(!playing)return;const dt=(now-last)/1000;last=now;T=Math.min(endT,T+dt*rate);paintT();if(T>=endT){setPlay(false);return}requestAnimationFrame(tick)}
-function setPlay(p){playing=p;setTimeout(()=>typeof paintIsland==="function"&&paintIsland(),0);const b=document.getElementById("play");b.textContent=p?"❚❚":"▶";b.setAttribute("aria-label",p?"Pause":"Play");if(p){if(T>=endT)T=0;last=performance.now();requestAnimationFrame(tick)}}
+function tick(now){if(!playing)return;const dt=(now-last)/1000;last=now;T=VO?Math.min(endT,VO.currentTime):Math.min(endT,T+dt*rate);paintT();if(T>=endT){setPlay(false);return}requestAnimationFrame(tick)}
+function setPlay(p){playing=p;setTimeout(()=>typeof paintIsland==="function"&&paintIsland(),0);const b=document.getElementById("play");b.textContent=p?"❚❚":"▶";b.setAttribute("aria-label",p?"Pause":"Play");if(p){if(T>=endT)T=0;if(VO){try{VO.currentTime=T}catch(e){}VO.playbackRate=rate;const pr=VO.play();if(pr&&pr.catch)pr.catch(()=>setPlay(false))}last=performance.now();requestAnimationFrame(tick)}else if(VO)VO.pause()}
 document.getElementById("play").onclick=()=>setPlay(!playing);
-document.getElementById("speed").onclick=e=>{rate=rate===1?1.5:rate===1.5?2:1;e.target.textContent=rate+"×"};
-bar.onclick=e=>{const r=bar.getBoundingClientRect();T=(e.clientX-r.left)/r.width*endT;paintT()};
-tr.addEventListener("click",e=>{const s=e.target.closest("span.w");if(!s||tr.classList.contains("read"))return;T=WORDS[+s.dataset.i].st+.01;paintT();if(!playing)setPlay(true)});
-document.getElementById("chapters").onclick=e=>{const b=e.target.closest("button");if(!b)return;T=CH[+b.dataset.c].s[0][0];paintT()};
+document.getElementById("speed").onclick=e=>{rate=rate===1?1.5:rate===1.5?2:1;if(VO)VO.playbackRate=rate;e.target.textContent=rate+"×"};
+bar.onclick=e=>{const r=bar.getBoundingClientRect();seek((e.clientX-r.left)/r.width*endT)};
+tr.addEventListener("click",e=>{const s=e.target.closest("span.w");if(!s||tr.classList.contains("read"))return;seek(WORDS[+s.dataset.i].st+.01);if(!playing)setPlay(true)});
+document.getElementById("chapters").onclick=e=>{const b=e.target.closest("button");if(!b)return;seek(CH[+b.dataset.c].s[0][0])};
 document.getElementById("tmode").onclick=e=>{const b=e.target.closest("button");if(!b)return;document.querySelectorAll("#tmode button").forEach(x=>x.classList.toggle("on",x===b));const read=b.dataset.m==="read";tr.classList.toggle("read",read);if(read)setPlay(false)};
 paintT();
 

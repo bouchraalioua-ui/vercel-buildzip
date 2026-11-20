@@ -442,6 +442,16 @@ table.t.tight td{font-size:12px;padding:7px 10px}
 .shot.img span{position:absolute;left:12px;bottom:12px;font-size:11px;color:#ededed;background:rgba(0,0,0,.72);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:5px 9px;backdrop-filter:blur(6px)}
 @media (max-width:900px){.shots{grid-template-columns:1fr}.shot.img img{height:260px}}
 
+/* ===== Spotlight on ships ===== */
+.chain .ship{transition:opacity .45s ease,filter .45s ease}
+.chain[data-dim="1"] .ship:not(.lit){opacity:.32;filter:grayscale(.9)}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(10px);background:var(--fg);color:var(--on-fg);font-size:13.5px;padding:10px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s,transform .3s var(--ease);z-index:90}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.car-item{display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:center}
+.car-item dt{grid-column:1/-1}
+.car-item .lg{grid-row:2;min-width:34px;height:30px;padding:0 6px;display:inline-grid;place-items:center;border:1px solid var(--line, rgba(0,0,0,.12));border-radius:7px;font-family:var(--mono, ui-monospace, monospace);font-size:10.5px;font-weight:600;letter-spacing:.04em;color:var(--fg, currentColor);background:transparent}
+.car-item dd{grid-column:2}
 /* bridge close */
 .bridge-sec{position:relative;overflow:hidden;padding-top:64px!important;padding-bottom:0!important;min-height:520px}
 .bridge{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(1100px,130%);height:auto;pointer-events:none;opacity:.75}
@@ -785,6 +795,3 @@ body.off-scrolly [data-maybe=scrolly],body.off-ba [data-maybe=ba],body.off-photo
 }
 @media (max-width:560px){ .brand{font-size:0}.brand .dot{font-size:10px} }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-/* ===== Spotlight on ships ===== */
-.chain .ship{transition:opacity .45s ease,filter .45s ease}
-.chain[data-dim="1"] .ship:not(.lit){opacity:.32;filter:grayscale(.9)}

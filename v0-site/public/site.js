@@ -415,3 +415,26 @@ $("kl").addEventListener("mousemove",e=>{const li=e.target.closest("li[data-i]")
 $("cmdk").onclick=e=>{if(e.target.id==="cmdk")closeK()};
 
 route();
+/* ===== Spotlight: dims the ships you're not looking at ===== */
+(function(){
+  var chain=document.getElementById("chain");if(!chain)return;
+  var ships=[].slice.call(chain.querySelectorAll(".ship"));var current=null,held=null,ticking=false;
+  function visible(el){var r=el.getBoundingClientRect();return Math.max(0,Math.min(r.bottom,innerHeight)-Math.max(r.top,60))}
+  function update(){ticking=false;
+    if(!chain.offsetParent){chain.removeAttribute("data-dim");return}
+    var best=null,bestV=0;ships.forEach(function(s){var v=visible(s);if(v>bestV){bestV=v;best=s}});
+    if(held)best=held;
+    else if(current&&best!==current&&visible(best)-visible(current)<innerHeight*.15)best=current;
+    if(bestV<innerHeight*.35&&!held){current=null;chain.removeAttribute("data-dim")}
+    else{current=best;chain.setAttribute("data-dim","1")}
+    ships.forEach(function(s){s.classList.toggle("lit",s===current)})}
+  function req(){if(!ticking){ticking=true;requestAnimationFrame(update)}}
+  ships.forEach(function(s){
+    s.addEventListener("pointerenter",function(){held=s;req()});
+    s.addEventListener("pointerleave",function(){if(held===s){held=null;req()}});
+    s.addEventListener("focusin",function(){held=s;req()});
+    s.addEventListener("focusout",function(){if(held===s&&!s.matches(":hover")){held=null;req()}})});
+  addEventListener("scroll",req,{passive:true});addEventListener("resize",req);addEventListener("hashchange",function(){setTimeout(req,80)});
+  if(typeof route==="function"){var _r=route;route=function(f){_r(f);setTimeout(req,120)}}
+  setTimeout(req,300);
+})();

@@ -785,3 +785,6 @@ body.off-scrolly [data-maybe=scrolly],body.off-ba [data-maybe=ba],body.off-photo
 }
 @media (max-width:560px){ .brand{font-size:0}.brand .dot{font-size:10px} }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ===== Spotlight on ships ===== */
+.chain .ship{transition:opacity .45s ease,filter .45s ease}
+.chain[data-dim="1"] .ship:not(.lit){opacity:.32;filter:grayscale(.9)}

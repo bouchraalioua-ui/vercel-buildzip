@@ -60,7 +60,7 @@ export const markup = String.raw`
       </a>
       <a class="door" href="#my-ships">
         <div class="top"><h2>My ships</h2><span class="arrow">→</span></div>
-        <p>Two finance applications I conceived and built alone at CBS Studios, both adopted by the team, plus CloudMargin. Run them yourself.</p>
+        <p>Two self-conceptualized finance applications built at CBS Studios, both adopted by the team, plus CloudMargin. Run them yourself.</p>
         <div class="peek sp">
           <div class="sp-row"><i class="sd"></i><div><b>LRP variance app</b><small>CBS Studios · adopted</small></div><span class="sp-m mono">2 hrs → &lt;10 s</span></div>
           <div class="sp-row"><i class="sd"></i><div><b>Revenue allocation app</b><small>CBS Studios · adopted</small></div><span class="sp-m mono">$700M / yr</span></div>
@@ -69,7 +69,7 @@ export const markup = String.raw`
       </a>
       <a class="door" href="#why-vercel">
         <div class="top"><h2>Why Vercel</h2><span class="arrow">→</span></div>
-        <p>Vercel’s finance team builds its own tools. Here is where I’ve already done that, set against Vercel’s own words, and why I want to build in tech.</p>
+        <p>I was always the quiet technologist on finance teams. Here’s why I want to be somewhere that’s the job.</p>
         <div class="peek pair" id="vpeek"></div>
       </a>
     </div>
@@ -109,11 +109,11 @@ export const markup = String.raw`
   <div class="sec"><div class="wrap">
     <p class="kicker" id="w-scale">The scale I’ve worked at</p>
     <div class="scale">
-      <div><b>$700M</b><span>Paramount+ allocation revenue</span></div>
-      <div><b>$6.4M</b><span>detected over-allocation, fixed and presented to the CFO</span></div>
-      <div><b>$600M</b><span>Kaiser Permanente operating budget across 27 locations and 200 cost centers</span></div>
-      <div><b>$45M</b><span>appointed by the UCLA chancellor to help advise on</span></div>
-      <div><b>$5.5M</b><span>managed directly through student government positions</span></div>
+      <div><b>$700M</b><span>Paramount+ revenue a year, allocated by an app I built</span></div>
+      <div><b>$6.4M</b><span>over-allocation I found, fixed and presented to the CFO</span></div>
+      <div><b>$600M</b><span>Kaiser Permanente budget, 27 locations, 200 cost centers</span></div>
+      <div><b>$45M</b><span>campus funding I advise on, appointed by the UCLA Chancellor</span></div>
+      <div><b>$5.5M</b><span>managed directly <em class="todo">· add which budget</em></span></div>
     </div>
   </div></div>
   <div class="sec" data-maybe="photos" id="w-places"><div class="wrap">
@@ -128,7 +128,7 @@ export const markup = String.raw`
   <div class="wrap page-head">
     <p class="kicker">02 · My ships</p>
     <h1 class="h-page" style="margin-top:14px">My ships</h1>
-    <p class="lead">Two applications I conceived and built on my own at CBS Studios, both adopted into the team’s workflow, and CloudMargin, which I built independently. Each one starts with the real story, then a synthetic version you can run.</p>
+    <p class="lead">Two self-conceptualized applications I built at CBS Studios, both adopted into the team’s workflow, plus CloudMargin, built independently. Each starts with the real story, then a version you can run.</p>
   </div>
   <div class="ship-nav"><div class="wrap">
     <a href="#s-how" data-s="s-how" class="on">How I ship</a>
@@ -280,9 +280,9 @@ export const markup = String.raw`
         <p>After the allocation work I wanted to understand a business where revenue moves with usage. Instead of only reading about AI infrastructure economics, I modelled one: how usage drives cost and revenue, where gross margin comes from, and how scenarios change the forecast.</p>
       </div>
       <div class="shots">
-        <div class="shot">screenshot 1 · the main view<br/>(1600×1000 PNG)</div>
-        <div class="shot">screenshot 2 · scenarios</div>
-        <div class="shot">screenshot 3 · margin drivers</div>
+        <a class="shot img wide" href="cloudmargin/cm-1.jpg" target="_blank" rel="noopener"><img src="cloudmargin/cm-1.jpg" alt="CloudMargin overview: from agent demand to investment decisions" loading="lazy"/><span class="mono">01 · FP&amp;A · What if agents handle more of the workload?</span></a>
+        <a class="shot img" href="cloudmargin/cm-2.jpg" target="_blank" rel="noopener"><img src="cloudmargin/cm-2.jpg" alt="CloudMargin product finance: which customers are expensive to serve" loading="lazy"/><span class="mono">02 · Product Finance · Which customers are expensive to serve?</span></a>
+        <a class="shot img" href="cloudmargin/cm-3.jpg" target="_blank" rel="noopener"><img src="cloudmargin/cm-3.jpg" alt="CloudMargin investment decision: build, buy, or wait" loading="lazy"/><span class="mono">03 · Investment · Should we build, buy, or wait?</span></a>
       </div>
       <div style="margin-top:18px"><a class="btn" href="https://vercel-frpbuilt.vercel.app/" target="_blank" rel="noopener">Open CloudMargin ↗</a></div>
     </article>
@@ -296,24 +296,66 @@ export const markup = String.raw`
   <div class="wrap page-head">
     <p class="kicker">03 · Why Vercel</p>
     <h1 class="h-page" style="margin-top:14px">Why Vercel</h1>
-    <p class="lead">Vercel has written publicly about how its finance team works: <span data-src="0">a team that ships</span>, <span data-src="1">finance treated like a product</span>, and <span data-src="2">tools that have to survive</span>. Here is where that matches decisions I’ve already made, and why I want to do this work in tech.</p>
+    <p class="lead vlead">On every finance team I’ve joined, I was quietly the person improving the process with technology. At Vercel, that isn’t a side role. It’s how finance works.</p>
   </div>
-  <div class="wrap" style="padding-bottom:44px">
-    <p class="kicker" id="v-words">How Vercel works, in its own words</p>
-    <div class="practice">
-      <div class="plist" id="plist"></div>
-      <div class="pview" id="pview"></div>
+
+  <div class="sec" id="v-pattern" style="padding-top:28px"><div class="wrap">
+    <p class="kicker">The pattern</p>
+    <div class="vsplit">
+      <h2 class="h-sec">I kept being onboarded as the silent innovator.</h2>
+      <div class="vprose">
+        <p>Each team brought me on for finance. Each time, I ended up using technology to improve how that finance got done. Nobody called it a pattern, but it became one, and every small change rippled further than the task I was given.</p>
+        <p>It had me wondering how to get closer to where those tools come from.</p>
+      </div>
     </div>
-  </div>
-  <div class="sec" id="v-why" style="position:relative;overflow:hidden"><div class="wrap" style="position:relative;z-index:1">
-    <p class="kicker">Why tech</p>
-    <h2 class="h-sec" style="margin-top:12px;max-width:26ch">Healthcare taught me to diagnose. Entertainment taught me to create. Tech is where I want to build.</h2>
-    <div class="acts">
-      <div class="act"><span class="mono an">01 · Healthcare</span><b>Diagnose</b><p>Finding where a system breaks, and making it better. At <em>Kaiser Permanente</em> I helped the team modernize its reporting with Tableau. At <em>SFV Mental Health Center</em> I helped digitize accounting processes.</p></div>
-      <div class="act"><span class="mono an">02 · Entertainment</span><b>Create</b><p>Being creative about problems nobody had assigned. At <em>Paramount · CBS Studios</em> I conceived and built every one of my projects myself, and each went into the team’s workflow. At <em>NBCUniversal</em> I learned the controls good tools have to respect.</p></div>
-      <div class="act"><span class="mono an">03 · Technology</span><b>Build</b><p>Tech has always pulled at me. I added a <em>Statistics &amp; Data Science</em> minor to get closer to its tools, learned <span class="mono chips">SQL · Python · R · C++</span>, and built CloudMargin to keep scratching the itch.</p></div>
+    <div class="ptrail">
+      <div><span class="mono">Kaiser Permanente</span><b>Modernized reporting with Tableau</b></div>
+      <i>→</i>
+      <div><span class="mono">SFV Mental Health Center</span><b>Digitized accounting processes</b></div>
+      <i>→</i>
+      <div><span class="mono">Paramount · CBS Studios</span><b>Built the tools myself</b></div>
+      <i>→</i>
+      <div class="end"><span class="mono">Vercel</span><b>Where building is the job</b></div>
     </div>
-    <p class="why-close1">In every role I was onboarded as the intern asked to innovate with technology. Each time, it pulled me closer to the industry where that is simply how the work gets done.</p>
+  </div></div>
+
+  <div class="sec" id="v-chase"><div class="wrap">
+    <p class="kicker">I’d been chasing tech before I applied</p>
+    <div class="chase">
+      <div><span class="mono">01</span><b>Vice President, Girls Who Code</b><p>Kept me close to the tech world as a finance person. It’s how I first knew of Vercel.</p></div>
+      <div><span class="mono">02</span><b>HP Tech Ventures</b><p>I studied the fund’s investment thesis and the up-and-coming AI and cloud infrastructure companies that fit it.</p></div>
+      <div><span class="mono">03</span><b>Guillermo Rauch’s interview</b><p>Hearing how Vercel builds turned it from a company I knew of into one I wanted to work for. <em class="todo">· name one thing he said that stuck</em></p></div>
+      <div><span class="mono">04</span><b>CloudMargin, built in v0</b><p>On my own, before this application, to understand how an AI infrastructure business makes money. <a href="#my-ships" data-jump="#s-cm">See it ↗</a></p></div>
+    </div>
+  </div></div>
+
+  <div class="sec" id="v-noticed"><div class="wrap">
+    <p class="kicker">What I noticed, moving between industries</p>
+    <h2 class="h-sec" style="margin-top:10px;max-width:30ch">Corporate finance runs on the same cycles everywhere. What changes is what each industry cares about.</h2>
+    <div class="band3">
+      <div><span class="mono">Healthcare</span><b>taught me to diagnose.</b><p>Its metrics have barely moved in decades. The work is finding where a system breaks and making it better.</p></div>
+      <div><span class="mono">Entertainment</span><b>taught me to create.</b><p>Same planning cycle, different priorities: titles, slates, windows. Every project I shipped at CBS Studios was self-conceptualized.</p></div>
+      <div><span class="mono">Technology</span><b>is still forming.</b><p>The industry is still deciding what to measure. In tech, finance doesn’t just follow the playbook; it helps write it. That’s where I want to be.</p></div>
+    </div>
+  </div></div>
+
+  <div class="sec" id="v-rot"><div class="wrap">
+    <p class="kicker">The rotations</p>
+    <div class="rot-head">
+      <h2 class="h-sec" style="max-width:24ch">Why a rotation fits me.</h2>
+      <p class="rot-why">I’ve seen the same finance cycle from FP&amp;A, accounting operations, nonprofit finance and venture research. A rotation lets me bring all of it to one business that is still writing its playbook.</p>
+    </div>
+    <div class="rots">
+      <article class="rt"><b>Product Finance</b><dl>
+        <dt>Where it starts for me</dt><dd>I built <a href="#my-ships" data-jump="#s-cm">CloudMargin</a> to understand usage-based economics on my own, and my <a href="#my-ships" data-jump="#s-alloc">allocation model</a> worked title by title across cable and streaming.</dd>
+        <dt>What I’d bring</dt><dd>The habit of building the model I need, then proving it ties before anyone relies on it.</dd></dl></article>
+      <article class="rt"><b>GTM &amp; Corporate Finance</b><dl>
+        <dt>Where it starts for me</dt><dd>I’ve worked the planning cycle from three sides: <a href="#my-ships" data-jump="#s-var">long-range plan reconciliation</a> at CBS Studios, a $600M budget at Kaiser, and close at NBCUniversal.</dd>
+        <dt>What I’d bring</dt><dd>Turning a recurring manual process into something the team runs in seconds.</dd></dl></article>
+      <article class="rt"><b>Corp Dev &amp; IR</b><dl>
+        <dt>Where it starts for me</dt><dd>At HP Tech Ventures I studied an investment thesis and the AI and cloud infrastructure companies that fit it.</dd>
+        <dt>What I’d bring</dt><dd>A research habit for emerging companies, and practice explaining financial work to senior leaders, including a CFO.</dd></dl></article>
+    </div>
   </div></div>
   <div class="sec bridge-sec" id="v-contact">
     <svg class="bridge" id="bridge" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMax meet" aria-hidden="true"></svg>

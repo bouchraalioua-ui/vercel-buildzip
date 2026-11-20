@@ -9,12 +9,12 @@ export const markup = String.raw`
 
 <header class="nav">
   <div class="wrap">
-    <a class="brand" href="#/" aria-label="Home"><span class="dot">BA</span><span class="full">Bouchra Alioua</span></a>
+    <a class="brand" href="#home" aria-label="Home"><span class="dot">BA</span><span class="full">Bouchra Alioua</span></a>
     <nav class="links" aria-label="Pages"><span class="hl"></span><span class="act"></span>
-      <a href="#/" data-r="/">Home</a>
-      <a href="#/why-me" data-r="/why-me">Why me</a>
-      <a href="#/my-ships" data-r="/my-ships">My ships</a>
-      <a href="#/why-vercel" data-r="/why-vercel">Why Vercel</a>
+      <a href="#home" data-r="/">Home</a>
+      <a href="#why-me" data-r="/why-me">Why me</a>
+      <a href="#my-ships" data-r="/my-ships">My ships</a>
+      <a href="#why-vercel" data-r="/why-vercel">Why Vercel</a>
     </nav>
     <div class="tools">
       <button class="kbd" id="theme" aria-label="Toggle dark mode">◐</button>
@@ -34,7 +34,7 @@ export const markup = String.raw`
         <h1>Bouchra<br/>Alioua</h1>
         <p class="hero-sub">Economics at UCLA, minor in Statistics &amp; Data Science, class of 2027. Six finance roles across media, healthcare, venture research and nonprofits.</p>
         <div class="hero-cta">
-          <a class="btn lg" href="#/my-ships">See what I built →</a>
+          <a class="btn lg" href="#my-ships">See what I built →</a>
           <button class="btn ghost lg" onclick="openK()"><span class="mono" style="font-size:12px">⌘K</span> Jump anywhere</button>
         </div>
       </div>
@@ -49,7 +49,7 @@ export const markup = String.raw`
     </div>
 
     <div class="doors">
-      <a class="door" href="#/why-me">
+      <a class="door" href="#why-me">
         <div class="top"><h2>Why me</h2><span class="arrow">→</span></div>
         <p>Six roles, four industries, and the decisions that connect them. Told in my own voice, with a live transcript.</p>
         <div class="peek">
@@ -58,7 +58,7 @@ export const markup = String.raw`
           <p class="cap-line" id="capline">My first finance roles taught me how numbers get recorded, checked and explained.</p>
         </div>
       </a>
-      <a class="door" href="#/my-ships">
+      <a class="door" href="#my-ships">
         <div class="top"><h2>My ships</h2><span class="arrow">→</span></div>
         <p>Two finance applications I conceived and built alone at CBS Studios, both adopted by the team, plus CloudMargin. Run them yourself.</p>
         <div class="peek sp">
@@ -67,9 +67,9 @@ export const markup = String.raw`
           <div class="sp-row"><i class="sd live"></i><div><b>CloudMargin</b><small>Independent · live</small></div><span class="sp-m mono">live ↗</span></div>
         </div>
       </a>
-      <a class="door" href="#/why-vercel">
+      <a class="door" href="#why-vercel">
         <div class="top"><h2>Why Vercel</h2><span class="arrow">→</span></div>
-        <p>Vercel’s finance team builds its own tools. Here is where I’ve already done that, set against Vercel’s own words, and the three rotations I want.</p>
+        <p>Vercel’s finance team builds its own tools. Here is where I’ve already done that, set against Vercel’s own words, and why I want to build in tech.</p>
         <div class="peek pair" id="vpeek"></div>
       </a>
     </div>
@@ -120,7 +120,7 @@ export const markup = String.raw`
     <p class="kicker">Places I’ve worked · drag them around</p>
     <div class="desk" id="desk"></div>
   </div></div>
-  <a class="next wrap" href="#/my-ships"><span class="kicker">Next</span><b>My ships <span>→</span></b></a>
+  <a class="next wrap" href="#my-ships"><span class="kicker">Next</span><b>My ships <span>→</span></b></a>
 </section>
 
 <!-- ============================ SHIPS ============================ -->
@@ -295,7 +295,7 @@ export const markup = String.raw`
     </article>
   </div>
 
-  <a class="next wrap" href="#/why-vercel"><span class="kicker">Next</span><b>Why Vercel <span>→</span></b></a>
+  <a class="next wrap" href="#why-vercel"><span class="kicker">Next</span><b>Why Vercel <span>→</span></b></a>
 </section>
 
 <!-- ============================ WHY VERCEL ============================ -->
@@ -331,7 +331,7 @@ export const markup = String.raw`
       <p class="gg-cap">The Golden Gate, with its cable written in Los Angeles.</p>
     </div>
   </div>
-  <a class="next wrap" href="#/"><span class="kicker">Back to</span><b>Home <span>→</span></b></a>
+  <a class="next wrap" href="#home"><span class="kicker">Back to</span><b>Home <span>→</span></b></a>
 </section>
 </main>
 

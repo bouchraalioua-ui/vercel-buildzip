@@ -298,18 +298,18 @@ export const markup = String.raw`
   </div>
 
   <div class="sec" id="v-pattern" style="padding-top:28px"><div class="wrap">
-    <p class="kicker">The pattern</p>
+    <p class="kicker">01 · The pattern</p>
     <div class="vsplit">
-      <h2 class="h-sec">I kept being onboarded as the silent innovator.</h2>
+      <h2 class="h-sec">Every team hired me for finance. I kept changing how the finance got done.</h2>
       <div class="vprose">
-        <p>Each team brought me on for finance. Each time, I ended up using technology to improve how that finance got done. Nobody called it a pattern, but it became one, and every small change rippled further than the task I was given.</p>
-        <p>It had me wondering how to get closer to where those tools come from.</p>
+        <p>No one asked me to. Each time, the fastest way to do the job well was to fix the process underneath it, and each fix went further than the last.</p>
+        <p>Eventually I wanted to work where that isn’t the side project. It’s the job.</p>
       </div>
     </div>
     <div class="ptrail">
-      <div><span class="mono">Kaiser Permanente</span><b>Modernized reporting with Tableau</b></div>
+      <div><span class="mono">Kaiser Permanente</span><b>Helped modernize reporting into Tableau</b></div>
       <i>→</i>
-      <div><span class="mono">SFV Mental Health Center</span><b>Digitized accounting processes</b></div>
+      <div><span class="mono">SFV Mental Health Center</span><b>Helped digitize accounting processes</b></div>
       <i>→</i>
       <div><span class="mono">Paramount · CBS Studios</span><b>Built the tools myself</b></div>
       <i>→</i>
@@ -317,42 +317,29 @@ export const markup = String.raw`
     </div>
   </div></div>
 
-  <div class="sec" id="v-chase"><div class="wrap">
-    <p class="kicker">I’d been chasing tech before I applied</p>
-    <div class="chase">
-      <div><span class="mono">01</span><b>Vice President, Girls Who Code</b><p>Kept me close to the tech world as a finance person. It’s how I first knew of Vercel.</p></div>
-      <div><span class="mono">02</span><b>HP Tech Ventures</b><p>I evaluated emerging cloud infrastructure and AI startups to help develop an investment thesis and identify promising early-stage companies.</p></div>
-      <div><span class="mono">03</span><b>Guillermo Rauch’s interview</b><p>Hearing how Vercel builds turned it from a company I knew of into one I wanted to work for. <em class="todo">· name one thing he said that stuck</em></p></div>
-      <div><span class="mono">04</span><b>CloudMargin, built in v0</b><p>On my own, before this application, to understand how an AI infrastructure business makes money. <a href="#my-ships" data-jump="#s-cm">See it ↗</a></p></div>
-    </div>
-  </div></div>
-
   <div class="sec" id="v-noticed"><div class="wrap">
-    <p class="kicker">What I noticed, moving between industries</p>
-    <h2 class="h-sec" style="margin-top:10px;max-width:30ch">Corporate finance runs on the same cycles everywhere. What changes is what each industry cares about.</h2>
+    <p class="kicker">02 · Why tech</p>
+    <h2 class="h-sec" style="margin-top:10px;max-width:30ch">Finance runs on the same cycles in every industry. In tech, it still gets to write the playbook.</h2>
     <div class="band3">
-      <div><span class="mono">Healthcare</span><b>taught me to diagnose.</b><p>Its metrics have barely moved in decades. The work is finding where a system breaks and making it better.</p></div>
-      <div><span class="mono">Entertainment</span><b>taught me to create.</b><p>Same planning cycle, different priorities: titles, slates, windows. Every project I shipped at CBS Studios was self-conceptualized.</p></div>
-      <div><span class="mono">Technology</span><b>is still forming.</b><p>The industry is still deciding what to measure. In tech, finance doesn’t just follow the playbook; it helps write it. That’s where I want to be.</p></div>
+      <div><span class="mono">Healthcare</span><b>taught me to diagnose.</b><p>Tracing a number back to the exact point where the process breaks.</p></div>
+      <div><span class="mono">Entertainment</span><b>taught me to create.</b><p>Most problems had no template, so I conceptualized and built my own.</p></div>
+      <div><span class="mono">Technology</span><b>is still forming.</b><p>What to measure is still being decided, and finance helps decide it.</p></div>
+    </div>
+    <div class="vprose vchase">
+      <p>So I moved toward it. As Vice President of Girls Who Code, I first came across Vercel. At HP Tech Ventures, I researched emerging cloud and AI infrastructure companies to help build an investment thesis. Guillermo Rauch’s interview turned Vercel from a company I knew into one I wanted to work for. <em class="todo">· name one thing he said that stuck</em> Then, before applying, I built <a href="#my-ships" data-jump="#s-cm">CloudMargin</a> in v0 to understand how an AI infrastructure business makes money.</p>
     </div>
   </div></div>
 
   <div class="sec" id="v-rot"><div class="wrap">
-    <p class="kicker">The rotations</p>
+    <p class="kicker">03 · The rotation</p>
     <div class="rot-head">
       <h2 class="h-sec" style="max-width:24ch">Why a rotation fits me.</h2>
-      <p class="rot-why">I’ve seen the same finance cycle from FP&amp;A, accounting operations, nonprofit finance and venture research. A rotation lets me bring all of it to one business that is still writing its playbook.</p>
+      <p class="rot-why">I’ve already seen finance from FP&amp;A, accounting, nonprofit and venture seats. A rotation puts all of it to work in one business.</p>
     </div>
     <div class="rots">
-      <article class="rt"><b>Product Finance</b><dl>
-        <dt>Where it starts for me</dt><dd>I built <a href="#my-ships" data-jump="#s-cm">CloudMargin</a> to understand usage-based economics on my own, and my <a href="#my-ships" data-jump="#s-alloc">allocation model</a> worked title by title across cable and streaming.</dd>
-        <dt>What I’d bring</dt><dd>The habit of building the model I need, then proving it ties before anyone relies on it.</dd></dl></article>
-      <article class="rt"><b>GTM &amp; Corporate Finance</b><dl>
-        <dt>Where it starts for me</dt><dd>I’ve worked the planning cycle from three sides: <a href="#my-ships" data-jump="#s-var">long-range plan reconciliation</a> at CBS Studios, a $600M budget at Kaiser, and close at NBCUniversal.</dd>
-        <dt>What I’d bring</dt><dd>Turning a recurring manual process into something the team runs in seconds.</dd></dl></article>
-      <article class="rt"><b>Corp Dev &amp; IR</b><dl>
-        <dt>Where it starts for me</dt><dd>At HP Tech Ventures I evaluated cloud infrastructure and AI startups to develop an investment thesis and identify promising early-stage companies.</dd>
-        <dt>What I’d bring</dt><dd>A research habit for emerging companies, and practice explaining financial work to senior leaders, including a CFO.</dd></dl></article>
+      <article class="rt"><b>Product Finance</b><p>I built <a href="#my-ships" data-jump="#s-cm">CloudMargin</a> to learn usage-based economics, and my <a href="#my-ships" data-jump="#s-alloc">allocation model</a> split $700M title by title across cable and streaming.</p></article>
+      <article class="rt"><b>GTM &amp; Corporate Finance</b><p>I’ve worked the planning cycle at CBS Studios, Kaiser and NBCUniversal, and I turn recurring manual work into something the team runs in seconds.</p></article>
+      <article class="rt"><b>Corp Dev &amp; IR</b><p>I researched cloud and AI infrastructure startups at HP Tech Ventures, and I’ve presented my own findings to a CFO.</p></article>
     </div>
   </div></div>
   <div class="sec bridge-sec" id="v-contact">
@@ -360,7 +347,7 @@ export const markup = String.raw`
     <div class="wrap bridge-copy">
       <h2 class="h-sec">Thank you for reading.</h2>
       <p class="lead" style="margin:12px auto 0">I’d love to bring this to Vercel’s finance team in San Francisco.</p>
-      <div style="display:flex;gap:10px;justify-content:center;margin-top:22px"><a class="btn" href="mailto:bouchraalioua@g.ucla.edu">Email me</a><a class="btn ghost" href="${RESUME}" download="Bouchra_Alioua_Resume.pdf">Résumé ↓</a></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:22px"><span class="mono" style="font-size:14px;color:var(--fg2);user-select:all">bouchraalioua@g.ucla.edu</span><a class="btn ghost" href="${RESUME}" download="Bouchra_Alioua_Resume.pdf">Résumé ↓</a></div>
       <p class="gg-cap">The Golden Gate, with its cable written in Los Angeles.</p>
     </div>
   </div>

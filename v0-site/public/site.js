@@ -141,7 +141,7 @@ const $=id=>document.getElementById(id);
 
 /* ---------- How I ship: simple six-step stepper ---------- */
 const STEPS=[
- {t:"Understand the workflow",v:"In Vercel’s v0 story with Stripe, the tool came from the person closest to the problem: a finance professional who could build it himself.",src:["Vercel · Stripe customer story","https://vercel.com/customers/how-stripe-built-a-game-changing-app-in-a-single-flight-with-v0"],me:"The variance tool went into the monthly cycle early, then kept growing, all the way to a version the VP fully adopted into his own monthly variance analysis and allocation cycles.",p:["Ship 01","#s-var"]},
+ {t:"Understand the workflow",v:"In Vercel’s v0 story with Stripe, the tool came from the person closest to the problem: a finance professional who could build it himself.",src:["Vercel · Stripe customer story","https://vercel.com/customers/how-stripe-built-a-game-changing-app-in-a-single-flight-with-v0"],me:"At CBS Studios I learned the long-range plan, the production schedules and the allocation model before building anything.",p:["Ship 01","#s-var"]},
  {t:"Build by prompting",v:"Vercel’s CFO, Marten Abrahamsen, uses v0 to get ideas in front of technical colleagues faster.",src:["Vercel press page","https://vercel.com/press"],me:"I build with AI tools rather than as a trained engineer: both CBS Studios tools were AI-assisted, and CloudMargin was built in v0.",p:["Ship 03","#s-cm"]},
  {t:"Ship a first version",v:"Iterate to greatness: launch an initial version rapidly, then keep iterating.",src:["Paraform · How Vercel hires","https://www.paraform.com/blog/how-vercel-hires"],me:"The variance tool went into the monthly cycle early, then kept growing, all the way to a version the VP planned to run from his own Claude.",p:["Ship 01","#s-var"]},
  {t:"Make it right",v:"Vercel’s internal mantra, per its VP of Engineering: “make it work, make it fast, make it good.”",src:["Jam · How Vercel uses AI","https://jam.dev/blog/how-vercel-uses-ai-w-vp-of-eng-lindsey-simon/"],me:"Before trusting the allocation, I mapped every way it could fail. Checking that pool sums tied is how I found the $6.4M error.",p:["Ship 02","#s-alloc"]},
@@ -324,7 +324,7 @@ function words(){SW.forEach(p=>{const r=p.getBoundingClientRect();if(!r.height)r
 addEventListener("scroll",words,{passive:true});addEventListener("hashchange",()=>setTimeout(words,60));words();
 
 /* =================== MAYBE: draggable photos =================== */
-(()=>{const desk=document.getElementById("desk");const items=[["UCLA","Royce Hall",4,14,-5],["CBS Studios","the lot, Studio City",22,52,4],["Kaiser Permanente","Woodland Hills",42,12,-3],["HP Tech Ventures","research notes",61,50,6],["My desk","where CloudMargin started",78,18,-4]];
+(()=>{const desk=document.getElementById("desk");if(!desk)return;const items=[["UCLA","Royce Hall",4,14,-5],["CBS Studios","the lot, Studio City",22,52,4],["Kaiser Permanente","Woodland Hills",42,12,-3],["HP Tech Ventures","research notes",61,50,6],["My desk","where CloudMargin started",78,18,-4]];
  desk.innerHTML=items.map(([a,b,x,y,r])=>`<div class="pol" style="left:${x}%;top:${y}px;transform:rotate(${r}deg)"><div class="im">your photo<br/>${b}</div><span>${a}</span></div>`).join("");let z=5;
  desk.querySelectorAll(".pol").forEach(p=>{p.addEventListener("pointerdown",e=>{p.setPointerCapture(e.pointerId);p.style.zIndex=++z;const sx=e.clientX-p.offsetLeft,sy=e.clientY-p.offsetTop;p.onpointermove=m=>{p.style.left=m.clientX-sx+"px";p.style.top=m.clientY-sy+"px"};p.onpointerup=()=>p.onpointermove=null})})})();
 
@@ -335,9 +335,9 @@ document.querySelectorAll("[data-src]").forEach(el=>{const hc=document.getElemen
  el.addEventListener("mouseleave",()=>hc.classList.remove("on"))});
 
 /* =================== nav drill-downs =================== */
-const DD={"/why-me":[["01","My story","Listen or read, two minutes","/why-me","#w-story"],["02","The scale of my work","$700M, $6.4M, $600M and more","/why-me","#w-scale"],["03","Places I’ve worked","Photos you can move around","/why-me","#w-places"]],
+const DD={"/why-me":[["01","My story","Listen or read, two minutes","/why-me","#w-story"],["02","The scale of my work","$700M, $6.4M, $600M and more","/why-me","#w-scale"]],
  "/my-ships":[["↻","How I ship","My building loop, step by step","/my-ships","#s-how"],["01","Variance & reconciliation","Demo · run it yourself","/my-ships","#s-var"],["02","Revenue allocation","Demo · the CFO revision story","/my-ships","#s-alloc"],["03","CloudMargin","Independent · live app","/my-ships","#s-cm"]],
- "/why-vercel":[["01","In Vercel’s own words","Their practices, beside my decisions","/why-vercel","#v-words"],["02","Why tech","The intern who modernizes the work","/why-vercel","#v-why"],["03","Get in touch","Email and résumé","/why-vercel","#v-contact"]]};
+ "/why-vercel":[["01","The pattern","The silent innovator","/why-vercel","#v-pattern"],["02","Chasing tech","What I did before applying","/why-vercel","#v-chase"],["03","What I noticed","An industry still forming","/why-vercel","#v-noticed"],["04","The rotations","Product · GTM & Corp Fin · Corp Dev & IR","/why-vercel","#v-rot"]]};
 (()=>{const dd=document.getElementById("dd"),nav=document.querySelector("header.nav");let hide;
  const go=(r,sel)=>{dd.classList.remove("on");if(curRoute()!==r)navigate(r);setTimeout(()=>{const el=document.querySelector(sel);if(el){const y=el.getBoundingClientRect().top+scrollY-120;scrollTo({top:y,behavior:"smooth"})}},curRoute()===r?0:120)};
  document.querySelectorAll(".links a").forEach(a=>a.addEventListener("mouseenter",()=>{clearTimeout(hide);const items=DD[a.dataset.r];if(!items){dd.classList.remove("on");return}
@@ -346,6 +346,12 @@ const DD={"/why-me":[["01","My story","Listen or read, two minutes","/why-me","#
  const out=()=>{hide=setTimeout(()=>dd.classList.remove("on"),180)};document.querySelector(".links").addEventListener("mouseleave",out);dd.addEventListener("mouseleave",out);dd.addEventListener("mouseenter",()=>clearTimeout(hide));
  dd.addEventListener("click",e=>{const a=e.target.closest("a");if(!a)return;e.preventDefault();go(a.dataset.r,a.dataset.sel)})})();
 
+
+
+/* =================== email: always works =================== */
+document.addEventListener("click",e=>{const a=e.target.closest('a[href^="mailto:"]');if(!a)return;const em=a.getAttribute("href").replace("mailto:","");
+ const show=t=>{const el=document.getElementById("toast");el.textContent=t;el.classList.add("on");clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove("on"),2600)};
+ try{navigator.clipboard.writeText(em).then(()=>show("Email copied: "+em),()=>show(em))}catch(err){show(em)}});
 
 /* =================== WHY VERCEL =================== */
 const PR=[
@@ -378,10 +384,10 @@ if($("rtabs"))$("rtabs").onclick=e=>{const b=e.target.closest("button");if(!b)re
 /* ⌘K with expandable drill-downs */
 const KT=[
  {n:"Home",r:"/",kids:[]},
- {n:"Why me",r:"/why-me",kids:[["My story · listen or read","#w-story"],["Play my story","play"],["The scale of my work","#w-scale"],["Places I’ve worked","#w-places"]]},
+ {n:"Why me",r:"/why-me",kids:[["My story · listen or read","#w-story"],["Play my story","play"],["The scale of my work","#w-scale"]]},
  {n:"My ships",r:"/my-ships",kids:[["How I ship · the building loop","#s-how"],["01 Variance & reconciliation · demo","#s-var"],["02 Revenue allocation · demo","#s-alloc"],["03 CloudMargin · live app","#s-cm"]]},
- {n:"Why Vercel",r:"/why-vercel",kids:[["In Vercel’s own words","#v-words"],["Why tech","#v-why"],["Get in touch","#v-contact"]]},
- {n:"Contact",r:null,kids:[["Email Bouchra","mailto:bouchraalioua@g.ucla.edu"],["Download résumé","#"]]}];
+ {n:"Why Vercel",r:"/why-vercel",kids:[["The pattern","#v-pattern"],["Chasing tech before I applied","#v-chase"],["What I noticed","#v-noticed"],["The rotations","#v-rot"],["Get in touch","#v-contact"]]},
+ {n:"Contact",r:null,kids:[["Email Bouchra","mailto:bouchraalioua@g.ucla.edu"],["Download résumé","resume.pdf"]]}];
 let kopen=new Set(),ksel=0,kitems=[];
 function openK(){$("cmdk").classList.add("on");$("kq").value="";kopen=new Set([KT.findIndex(g=>g.r===curRoute())]);ksel=0;paintK();setTimeout(()=>$("kq").focus(),20)}
 function closeK(){$("cmdk").classList.remove("on")}
@@ -397,6 +403,7 @@ function goK(it){if(!it)return;if(it.type==="g"){if(it.g.r){closeK();navigate(it
  closeK();const t=it.k[1],r=it.g.r||curRoute();
  if(t==="play"){navigate("/why-me");setTimeout(()=>setPlay(true),300);return}
  if(t.startsWith("mailto")){location.href=t;return}
+ if(t==="resume.pdf"){const a=document.querySelector('a[download]');if(a)a.click();return}
  if(t==="#")return;
  if(curRoute()!==r)navigate(r);setTimeout(()=>{const el=document.querySelector(t);if(el)scrollTo({top:el.getBoundingClientRect().top+scrollY-120,behavior:"smooth"})},120)}
 $("open-k").onclick=openK;
@@ -415,6 +422,7 @@ $("kl").addEventListener("mousemove",e=>{const li=e.target.closest("li[data-i]")
 $("cmdk").onclick=e=>{if(e.target.id==="cmdk")closeK()};
 
 route();
+
 /* ===== Spotlight: dims the ships you're not looking at ===== */
 (function(){
   var chain=document.getElementById("chain");if(!chain)return;
@@ -423,8 +431,8 @@ route();
   function update(){ticking=false;
     if(!chain.offsetParent){chain.removeAttribute("data-dim");return}
     var best=null,bestV=0;ships.forEach(function(s){var v=visible(s);if(v>bestV){bestV=v;best=s}});
-    if(held)best=held;
-    else if(current&&best!==current&&visible(best)-visible(current)<innerHeight*.15)best=current;
+    if(held)best=held; // never dim what you're interacting with
+    else if(current&&best!==current&&visible(best)-visible(current)<innerHeight*.15)best=current; // no flicker
     if(bestV<innerHeight*.35&&!held){current=null;chain.removeAttribute("data-dim")}
     else{current=best;chain.setAttribute("data-dim","1")}
     ships.forEach(function(s){s.classList.toggle("lit",s===current)})}
@@ -438,3 +446,4 @@ route();
   if(typeof route==="function"){var _r=route;route=function(f){_r(f);setTimeout(req,120)}}
   setTimeout(req,300);
 })();
+
